@@ -89,7 +89,20 @@ class ProductService {
     async searchProductByName(keyword) {
         try {
 
-            let result = await ProductRepository.getProductByName(keyword);
+            let products = await ProductRepository.getProductByName(keyword);
+
+            let result = [];
+
+            for (var product of products) {
+                let item = {
+                    "productId": product.productId,
+                    "productName": product.productName,
+                    "images": `${config.endpointImageUrl}/${product.images}`,
+                    "pricePerUnit": product.pricePerUnit
+                };
+
+                result.push(item);
+            }
 
             return result;
 

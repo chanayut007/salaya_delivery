@@ -123,16 +123,18 @@ class ProductRepository {
     async getProductByName(keyword) {
         try {
             let connection = await MySqlConnection.connect();
+
+            const value = `%${keyword}%`;
+
             return await new Promise((resolve, reject) => {
                 connection.query(`SELECT 
                 productTable.product_id as productId,
                 productTable.product_name as productName,
-                productTable.product_details as details,
                 productTable.images as images,
                 productTable.price_per_unit as pricePerUnit
                 FROM salaya_delivery.product as productTable
                 WHERE productTable.product_name LIKE ? `, 
-                [`%${keyword}%`],
+                [value],
                 (err, result) => {
                     connection.release();
                     if (err) reject(err);

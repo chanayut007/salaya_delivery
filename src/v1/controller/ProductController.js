@@ -91,7 +91,7 @@ class ProductController {
         try {
             const { name } = req.query;
 
-            if (!productId || !(typeof(productId) != String)) {
+            if (!name) {
                 res.status(http.HTTP_CLIENT_ERROR_CODE).send({
                     "statusCode": http.HTTP_CLIENT_ERROR_CODE,
                     "statusMessage": http.HTTP_PRODUCT_IDENTIFIER_INVALID
