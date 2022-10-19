@@ -32,20 +32,11 @@ class ProductRepository {
             let connection = await MySqlConnection.connect();
             return await new Promise((resolve, reject) => {
                 connection.query(`SELECT 
-                product.productId as productId,
-                product.productName as productName,
-                product.isRecommend as isRecommend,
-                product.images as images,
-                product.price_per_unit as pricePerUnit
-                FROM (SELECT productTable.product_id as productId,
+                productTable.product_id as productId,
                 productTable.product_name as productName,
                 productTable.images as images,
-                productTable.price_per_unit as price_per_unit,
-                productTable.is_recommend as isRecommend,
-                productCat.category as category
-                FROM salaya_delivery.product as productTable 
-                LEFT JOIN salaya_delivery.product_category as productCat 
-                ON productTable.product_id = productCat.product ) as product LEFT JOIN salaya_delivery.category as categoryTable ON product.category = categoryTable.id;`, 
+                productTable.price_per_unit as pricePerUnit
+                FROM salaya_delivery.product as productTable ;`, 
                 [],
                 (err, result) => {
                     connection.release();
@@ -66,19 +57,14 @@ class ProductRepository {
 
             return await new Promise((resolve, reject) => {
                 connection.query(`SELECT 
-                product.productId as productId,
-                product.productName as productName,
-                product.images as images,
-                product.price_per_unit as pricePerUnit
-                FROM (SELECT productTable.product_id as productId,
+                productCate.product as productId,
+                productCate.category as category,
                 productTable.product_name as productName,
                 productTable.images as images,
-                productCat.category as category,
-                productTable.price_per_unit as price_per_unit
+                productTable.price_per_unit as pricePerUnit
                 FROM salaya_delivery.product as productTable 
-                LEFT JOIN salaya_delivery.product_category as productCat 
-                ON productTable.product_id = productCat.product ) as product LEFT JOIN salaya_delivery.category as categoryTable ON product.category = categoryTable.id
-                WHERE categoryTable.id = ? `,
+                JOIN salaya_delivery.product_category as productCate ON productTable.product_id = productCate.product 
+                WHERE productCate.category = ? ;`,
                  [categoryType],
                  (err, result) => {
                     connection.release();
