@@ -35,7 +35,10 @@ class CheckoutService {
                 let resultItem = await CheckoutRepository.importItems(dataItem);
             }
 
-            return true;
+            return {
+                "orderNo": orderNo,
+                "checkoutDate": getCheckoutDate()
+            };
 
         } catch (error) {
             throw error;

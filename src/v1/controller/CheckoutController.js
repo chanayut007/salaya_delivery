@@ -39,6 +39,7 @@ class CheckoutController {
             res.status(http.HTTP_UPDATE_SUCCESS_CODE).send({
                 "statusCode": http.HTTP_UPDATE_SUCCESS_CODE,
                 "statusMessage": http.HTTP_UPDATE_SUCCESS_MSG,
+                "data": result
             });
 
         } catch (error) {
